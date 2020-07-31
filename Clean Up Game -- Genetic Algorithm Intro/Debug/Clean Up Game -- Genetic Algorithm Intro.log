@@ -1,0 +1,2 @@
+﻿  main.cpp
+c:\users\mason\documents\visual studio 2017\projects\clean up game -- genetic algorithm intro\clean up game -- genetic algorithm intro\main.cpp(10): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "pch.h"' to your source?
