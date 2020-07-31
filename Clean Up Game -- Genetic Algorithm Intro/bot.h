@@ -35,11 +35,11 @@ public:
 	void generateChromosome();
 	void printChromosome();
 
-	int getFitness(Board board, bool playVisually = true);
+	int getFitness(Board board, bool playVisually = false);
 
+	int id_;
 private:
 	std::map<std::array<Tile, 5>, Action> chromosome_;
-	int id_;
 };
 
 #endif

@@ -12,7 +12,6 @@ Bot::Bot(Bot &mom, Bot &dad, double mutationChance) {
 void Bot::generateChromosome() {
 	int c=0, n=0, e=0, s=0, w=0;
 	while (c < 3) {
-		std::srand(std::time(0)+c+n+e+s+w);
 		Action action = static_cast<Action>(std::rand() % 5);
 		std::array<Tile, 5> radar{ static_cast<Tile>(c), static_cast<Tile>(n), static_cast<Tile>(e), static_cast<Tile>(s), static_cast<Tile>(w)};
 		chromosome_.insert(std::make_pair(radar, action));
@@ -57,7 +56,7 @@ void Bot::printChromosome() {
 
 int Bot::getFitness(Board board, bool playVisually) {
 	int maxMoves = board.w_*board.h_*4;
-	int botX = 0, botY = 0;
+	int botX = 1, botY = 1;
 	int moveCount = 0;
 	int messesCleaned = 0;
 
@@ -66,7 +65,56 @@ int Bot::getFitness(Board board, bool playVisually) {
 		-1 for slippery floors (cleaning an already clean floor)
 		-1 for property damage (bumping into a wall) */
 	while (moveCount < maxMoves && messesCleaned < board.messes_) {
-		if (playVisually) board.printBoard(botX, botY);
+		if (playVisually) {
+			std::cout << "\nFitness: " << fitness << std::endl;
+			board.printBoard(botX, botY);
+		}
+
+		std::array<Tile, 5> radar;
+		radar[0] = static_cast<Tile>(board.board_[botY][botX]);													//Current
+		radar[1] = botY-1 > -1 ? static_cast<Tile>(board.board_[botY-1][botX]) : Tile::wall;			//North
+		radar[2] = botX+1 < board.w_ ? static_cast<Tile>(board.board_[botY][botX+1]) : Tile::wall;	//East
+		radar[3] = botY+1 < board.h_ ? static_cast<Tile>(board.board_[botY+1][botX]) : Tile::wall;	//South
+		radar[4] = botX-1 > -1 ? static_cast<Tile>(board.board_[botY][botX-1]) : Tile::wall;			//West
+
+		Action action = chromosome_[radar];
+		switch (action) {
+			case clean:
+				if (board.board_[botY][botX] == 1) { //Successful clean
+					fitness++;
+					board.board_[botY][botX] = 0; //Slippery floors
+				} else {
+					fitness--;
+				}
+				break;
+			case moveNorth:
+				if (botY - 1 < 0)
+					fitness--;
+				else
+					botY--;
+				break;
+			case moveSouth:
+				if (botY + 1 >= board.h_)
+					fitness--;
+				else
+					botY++;
+				break;
+			case moveEast:
+				if (botX + 1 >= board.w_)
+					fitness--;
+				else
+					botX++;
+				break;
+			case moveWest:
+				if (botX - 1 < 0)
+					fitness--;
+				else
+					botX--;
+				break;
+		}
+
 		moveCount++;
 	}
+
+	return fitness;
 }

@@ -57,15 +57,15 @@ wip	  Bot Class
 					+ A ledger with all possible states and corresponding actions
 					+ For each position in the ordered ledger, the assigned action has a 
 					  number. String these together and that's the chromosome.
- wip			- Fitness 
+ yes?			- Fitness 
 					+ Run the bot through the board:
 					  +1 for successful clean up
 					  -1 for slippery floors (cleaning an already clean floor)
 					  -1 for property damage (bumping into a wall)
 ______|__________________________________________________________________________________|
 wip		  Genetic Algorithm -- in Game::gameLoop()
- wip			1. Spawn a set number of Bots with random traits
- wip			2. Calculate the fitness of each Bot (run the game)
+ yes			1. Spawn a set number of Bots with random traits
+ yes			2. Calculate the fitness of each Bot (run the game)
  no			3. Take 2/4/whatever of the top Bots and combine their genes into new Bots
 					- reproduce function, taking 2 bots and creating n new ones with a percent
 						chance mutation on each gene

@@ -24,7 +24,7 @@ private:
 	Board board_;
 	int numMesses_;
 
-	std::vector<Bot> population_;
+	std::vector<std::pair<Bot, int> > population_;
 	//botCoords = x*y
 };
 

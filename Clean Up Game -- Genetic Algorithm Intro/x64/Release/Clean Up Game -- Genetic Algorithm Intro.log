@@ -1,10 +1,10 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(377,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  board.cpp
-c:\users\mason\documents\visual studio 2017\projects\clean up game -- genetic algorithm intro\clean up game -- genetic algorithm intro\board.cpp(22): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  bot.cpp
   game.cpp
+c:\users\mason\documents\visual studio 2017\projects\clean up game -- genetic algorithm intro\clean up game -- genetic algorithm intro\game.cpp(12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   Generating code
-  4 of 357 functions ( 1.1%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  7 of 556 functions ( 1.3%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Clean Up Game -- Genetic Algorithm Intro.vcxproj -> C:\Users\Mason\Documents\Visual Studio 2017\Projects\Clean Up Game -- Genetic Algorithm Intro\Clean Up Game -- Genetic Algorithm Intro\..\CleanUp.exe
