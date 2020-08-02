@@ -2,6 +2,7 @@
 #define BOARD_H_
 
 #include <ctime>
+#include <iomanip>
 #include <iostream>
 #include <vector>
 
@@ -12,7 +13,7 @@ public:
 	std::vector<std::vector<int> > board_;
 
 	void generateBoard(float messChance = 0.2, int width = 8, int height = 8);
-	void printBoard(int botX = -1, int botY = -1);
+	void printBoard(int botX = -1, int botY = -1) const;
 
 	int w_;
 	int h_;

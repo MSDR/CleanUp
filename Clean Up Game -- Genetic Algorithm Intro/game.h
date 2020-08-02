@@ -4,19 +4,19 @@
 #include "board.h"
 #include "bot.h"
 
+#include <cctype>
 #include <iostream>
 #include <list>
 #include <random>
 #include <string>
 #include <time.h>
-#include <vector>
 
 class Game {
 public:
-	Game(int numBots = 200, int numGenerations = 50, int boardWidth = 8, int boardHeight = 8, float messChance = 0.2f);
+	Game(int numBots = 200, int numGenerations = 50, int boardWidth = 8, int boardHeight = 8, double messChance = 0.2f, double mutationChance = 0.1f);
 
 private:	
-	void initializeGame(int numBots, int numGenerations, int boardWidth = 8, int boardHeight = 8, float messChance = 0.2f);
+	void initializeGame(int numBots, int numGenerations, int boardWidth = 8, int boardHeight = 8, double messChance = 0.2f);
 	void gameLoop();
 
 	//0 if empty
@@ -24,7 +24,10 @@ private:
 	Board board_;
 	int numMesses_;
 
-	std::vector<std::pair<Bot, int> > population_;
+	int numBots_;
+	double mutationChance_;
+	std::vector<std::pair<Bot*, int> > population_;
+	void printPopulation() const;
 	//botCoords = x*y
 };
 

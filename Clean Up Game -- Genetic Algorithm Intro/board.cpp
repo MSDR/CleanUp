@@ -28,7 +28,7 @@ void Board::generateBoard(float messChance, int width, int height) {
 	}
 }
 
-void Board::printBoard(int botX, int botY) {
+void Board::printBoard(int botX, int botY) const {
 	for (int h = 0; h < board_.size(); ++h) {
 		for (int w = 0; w <= 5*board_[h].size(); ++w)
 			std::cout << (w % 5 == 0 ? (h==0 ? " " : "|") : "_");
@@ -40,7 +40,7 @@ void Board::printBoard(int botX, int botY) {
 		std::cout << std::endl << "| ";
 
 		for (int w = 0; w < board_[h].size(); ++w) {
-			if (botX == h && botY == w)
+			if (botX == w && botY == h)
 				std::cout << "B";
 			else
 				std::cout << " ";

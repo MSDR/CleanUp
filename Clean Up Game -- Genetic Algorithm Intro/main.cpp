@@ -5,11 +5,14 @@
 
 
 int main(int argc, char* argv[]) {
+	std::cout << std::left;
+
 	int numBots = 200;
 	int numGenerations = 50;
 	int boardWidth = 8;
 	int boardHeight = 8;
-	float messChance = 0.2f;
+	double messChance = 0.2;
+	double mutationChance = 0.1;
 	for (int i = 1; i < argc; ++i) {
 		if (argv[i] == std::string("--numBots") || argv[i] == std::string("--b")) {
 			i++;
@@ -26,6 +29,9 @@ int main(int argc, char* argv[]) {
 		} else if (argv[i] == std::string("--messChance") || argv[i] == std::string("--c")) {
 			i++;
 			messChance = std::stof(argv[i]);
+		} else if (argv[i] == std::string("--mutationChance") || argv[i] == std::string("--m")) {
+			i++;
+			mutationChance = std::stof(argv[i]);
 		} else {
 			std::cerr << "Flag " << argv[i] << " not recognized.\n";
 		}
@@ -52,31 +58,30 @@ ______|_________________________________________________________________________
 yes	  Game Board
  yes			- 8x8 grid, a number of messes spawn randomly (adjustable)
 ______|__________________________________________________________________________________|
-wip	  Bot Class
+yes	  Bot Class
  yes			- The Chromosome
 					+ A ledger with all possible states and corresponding actions
 					+ For each position in the ordered ledger, the assigned action has a 
 					  number. String these together and that's the chromosome.
- yes?			- Fitness 
+ yes			- Fitness 
 					+ Run the bot through the board:
 					  +1 for successful clean up
 					  -1 for slippery floors (cleaning an already clean floor)
 					  -1 for property damage (bumping into a wall)
 ______|__________________________________________________________________________________|
-wip		  Genetic Algorithm -- in Game::gameLoop()
+yes		  Genetic Algorithm -- in Game::gameLoop()
  yes			1. Spawn a set number of Bots with random traits
  yes			2. Calculate the fitness of each Bot (run the game)
- no			3. Take 2/4/whatever of the top Bots and combine their genes into new Bots
-					- reproduce function, taking 2 bots and creating n new ones with a percent
+ yes			3. Take 2/4/whatever of the top Bots and combine their genes into new Bots
+	yes			- reproduce function, taking 2 bots and creating n new ones with a percent
 						chance mutation on each gene
- no			4. Mutate each new bot slightly -- each gene has a %chance to be mutated
- no			5. Repeat 2 until satisfied
+ yes			4. Repeat from 2 until satisfied
 ______|__________________________________________________________________________________|
-no			UI
- no			- The ability to run a set number of generations at a time 
+wip		UI
+ yes			- The ability to run a set number of generations at a time 
  no				+ Include other break conditions 
  no 				+ if a bot reaches a certain fitness, stop the algorithm 
- no			- Watch the best bot of a current generation play the game in 'real time'
+ yes			- Watch the best bot of a current generation play the game in 'real time'
  _____|__________________________________________________________________________________|
 					
 

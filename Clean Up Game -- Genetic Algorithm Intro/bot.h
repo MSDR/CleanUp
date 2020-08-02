@@ -8,6 +8,7 @@
 #include <iostream>
 #include <map>
 #include <random>
+#include <set>
 #include <string>
 
 enum Action {
@@ -29,15 +30,17 @@ public:
 	//Tiles are held in CNESW [current, north, east, south, west] order
 	typedef std::pair<std::array<Tile, 5>, Action> Gene;
 
-	Bot();
-	Bot(Bot &mom, Bot &dad, double mutationChance);
+	Bot(int id = -1);
+	Bot(const Bot& clone);
+	Bot(const Bot &mom, const Bot &dad, double mutationChance, int id = -1);
 
 	void generateChromosome();
-	void printChromosome();
+	void printChromosome() const;
 
-	int getFitness(Board board, bool playVisually = false);
+	int calculateFitness(Board board, bool playVisually = false); //board is by non-const copy intentionally
 
 	int id_;
+	int fitness_;
 private:
 	std::map<std::array<Tile, 5>, Action> chromosome_;
 };
