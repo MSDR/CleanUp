@@ -16,6 +16,7 @@ Game::Game(int numBots, int numGenerations, int boardWidth, int boardHeight, dou
 
 void Game::initializeGame(int numBots, int numGenerations, int boardWidth, int boardHeight, double messChance) {
 	board_ = Board(boardWidth, boardHeight, messChance);
+	numMesses_ = board_.messes_;
 	board_.printBoard();
 
 	std::srand(std::time(0)); //seed rng for chromosome generation
@@ -42,7 +43,8 @@ void Game::gameLoop() {
 		if (str == "r" || str == "run" || str == "run generation") {
 			std::cout << "\nHow many?\n";
 			std::cin >> str;
-			genToRunTo += std::stoi(str);
+			if (str == "max" || str == "inf") genToRunTo = INT_MAX;
+			else genToRunTo += std::stoi(str);
 		} else if (str == "w" || str == "watch" || str == "watch top" || str == "watch top bot") {
 			population_[0].first->calculateFitness(board_, true);
 			continue;
@@ -75,7 +77,14 @@ void Game::gameLoop() {
 		//	population_[0].first.printChromosome(); 
 			std::sort(population_.begin(), population_.end(), populationSortByFitness);
 
-			if(generation%50 == 0) {
+			if (population_[0].first->fitness_ >= numMesses_) {
+				std::cout << "A bot reached maximum fitness! Enter h to halt or any key to continue: ";
+				std::string s;
+				std::cin >> s;
+				if (s == "h") break;
+			}
+
+			if(generation%50 == 0 || generation == genToRunTo-1) {
 				avgFitness /= numBots_;
 				std::cout << "Generation " << generation << " avg fitness: " << std::setw(4) << avgFitness << std::endl;
 				std::cout << "Bot 0 | Fitness: " << std::setw(4) << population_[0].second << std::endl;

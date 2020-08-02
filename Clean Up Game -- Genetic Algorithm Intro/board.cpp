@@ -61,5 +61,5 @@ void Board::printBoard(int botX, int botY) const {
 	for (int w = 0; w <= 5*board_[0].size(); ++w)
 		std::cout << (w % 5 == 0 ? "|" : "_");
 
-	std::cout << std::endl;
+	std::cout << "\nTotal messes: " << messes_ << std::endl;
 }

@@ -136,8 +136,9 @@ int Bot::calculateFitness(Board board, bool playVisually) {
 			case clean:
 				if (board.board_[botY][botX] == 1) { //Successful clean
 					fitness++;
-					board.board_[botY][botX] = 0; //Slippery floors
-				} else {
+					board.board_[botY][botX] = 0; 
+					messesCleaned++;
+				} else { //Slippery floors
 					fitness--;
 				}
 				break;
@@ -168,6 +169,11 @@ int Bot::calculateFitness(Board board, bool playVisually) {
 		}
 
 		moveCount++;
+	}
+
+	if (playVisually) {
+		std::cout << "\nFitness: " << fitness << std::endl;
+		board.printBoard(botX, botY);
 	}
 
 	fitness_ = fitness;
