@@ -12,7 +12,9 @@ int main(int argc, char* argv[]) {
 	int boardWidth = 8;
 	int boardHeight = 8;
 	double messChance = 0.2;
-	double mutationChance = 0.1;
+	double mutationChance = 0.01;
+	bool excelMode = false;
+
 	for (int i = 1; i < argc; ++i) {
 		if (argv[i] == std::string("--numBots") || argv[i] == std::string("--b")) {
 			i++;
@@ -32,11 +34,14 @@ int main(int argc, char* argv[]) {
 		} else if (argv[i] == std::string("--mutationChance") || argv[i] == std::string("--m")) {
 			i++;
 			mutationChance = std::stof(argv[i]);
+		} else if (argv[i] == std::string("--excel") || argv[i] == std::string("--e")) {
+			i++;
+			excelMode = true;
 		} else {
 			std::cerr << "Flag " << argv[i] << " not recognized.\n";
 		}
 	}
-	Game game(numBots, numGenerations, boardWidth, boardHeight, messChance);
+	Game game(excelMode, numBots, numGenerations, boardWidth, boardHeight, messChance);
 	std::cout << std::endl << std::endl;
 }
 
@@ -65,9 +70,10 @@ yes	  Bot Class
 					  number. String these together and that's the chromosome.
  yes			- Fitness 
 					+ Run the bot through the board:
-					  +1 for successful clean up
-					  -1 for slippery floors (cleaning an already clean floor)
-					  -1 for property damage (bumping into a wall)
+					  +15 for successful clean up
+					  -10 for slippery floors (cleaning an already clean floor)
+					  -3  for property damage (bumping into a wall)
+					  -1  for each move
 ______|__________________________________________________________________________________|
 yes		  Genetic Algorithm -- in Game::gameLoop()
  yes			1. Spawn a set number of Bots with random traits

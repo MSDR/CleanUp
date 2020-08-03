@@ -8,11 +8,11 @@
 
 class Board {
 public:
-	Board(int boardWidth = 8, int boardHeight = 8, float messChance = 0.2f);
+	Board(int boardWidth = 8, int boardHeight = 8, double messChance = 0.2f);
 
 	std::vector<std::vector<int> > board_;
 
-	void generateBoard(float messChance = 0.2, int width = 8, int height = 8);
+	void generateBoard(double messChance = 0.2, int width = 8, int height = 8);
 	void printBoard(int botX = -1, int botY = -1) const;
 
 	int w_;

@@ -1,6 +1,6 @@
 #include "board.h"
 
-Board::Board(int boardWidth, int boardHeight, float messChance) {
+Board::Board(int boardWidth, int boardHeight, double messChance) {
 	w_ = boardWidth;
 	h_ = boardHeight;
 
@@ -11,7 +11,7 @@ Board::Board(int boardWidth, int boardHeight, float messChance) {
 	}
 }
 
-void Board::generateBoard(float messChance, int width, int height) {
+void Board::generateBoard(double messChance, int width, int height) {
 	if (messChance <= 0 || messChance >= 1)
 		throw "messChance should be a float between 0 and 1.";
 	if (width <= 0 || height <= 0)

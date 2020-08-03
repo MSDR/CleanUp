@@ -37,10 +37,11 @@ public:
 	void generateChromosome();
 	void printChromosome() const;
 
-	int calculateFitness(Board board, bool playVisually = false); //board is by non-const copy intentionally
+	std::pair<int, bool> calculateFitness(Board board, bool playVisually = false); //board is by non-const copy intentionally
 
 	int id_;
 	int fitness_;
+	int movesToComplete_;
 private:
 	std::map<std::array<Tile, 5>, Action> chromosome_;
 };

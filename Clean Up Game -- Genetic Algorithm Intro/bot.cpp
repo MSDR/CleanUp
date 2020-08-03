@@ -108,15 +108,15 @@ void Bot::printChromosome() const {
 	}
 }
 
-int Bot::calculateFitness(Board board, bool playVisually) {
+std::pair<int, bool> Bot::calculateFitness(Board board, bool playVisually) {
 	int maxMoves = board.w_*board.h_*4;
 	int botX = 0, botY = 0;
 	int moveCount = 0;
 	int messesCleaned = 0;
 
-	/*	+1 for successful clean up
-		-1 for slippery floors (cleaning an already clean floor)
-		-1 for property damage (bumping into a wall) */
+	/*	+15 for successful clean up
+		-10 for slippery floors (cleaning an already clean floor)
+		-1 for each move (-3 for bumping into a wall) */
 	int fitness = 0;
 	while (moveCount < maxMoves && messesCleaned < board.messes_) {
 		if (playVisually) {
@@ -135,36 +135,40 @@ int Bot::calculateFitness(Board board, bool playVisually) {
 		switch (action) {
 			case clean:
 				if (board.board_[botY][botX] == 1) { //Successful clean
-					fitness++;
+					fitness += 15;
 					board.board_[botY][botX] = 0; 
 					messesCleaned++;
 				} else { //Slippery floors
-					fitness--;
+					fitness -= 10;
 				}
 				break;
 			case moveNorth:
-				if (botY - 1 < 0)
-					fitness--;
-				else
+				fitness--;
+				if (botY - 1 >= 0)
 					botY--;
+				else
+					fitness -= 2;
 				break;
 			case moveSouth:
-				if (botY + 1 >= board.h_)
-					fitness--;
-				else
+				fitness--;
+				if (botY + 1 < board.h_)
 					botY++;
+				else
+					fitness -= 2;
 				break;
 			case moveEast:
-				if (botX + 1 >= board.w_)
-					fitness--;
-				else
+				fitness--;
+				if (botX + 1 < board.w_)
 					botX++;
+				else
+					fitness -= 2;
 				break;
 			case moveWest:
-				if (botX - 1 < 0)
-					fitness--;
-				else
+				fitness--;
+				if (botX - 1 >= 0)
 					botX--;
+				else
+					fitness -= 2;
 				break;
 		}
 
@@ -176,6 +180,8 @@ int Bot::calculateFitness(Board board, bool playVisually) {
 		board.printBoard(botX, botY);
 	}
 
+	movesToComplete_ = (messesCleaned >= board.messes_) ? moveCount : -1;
+
 	fitness_ = fitness;
-	return fitness;
+	return std::make_pair(fitness, messesCleaned >= board.messes_);
 }
