@@ -35,10 +35,10 @@ int main(int argc, char* argv[]) {
 			i++;
 			mutationChance = std::stof(argv[i]);
 		} else if (argv[i] == std::string("--excel") || argv[i] == std::string("--e")) {
-			i++;
 			excelMode = true;
 		} else {
 			std::cerr << "Flag " << argv[i] << " not recognized.\n";
+			return 1;
 		}
 	}
 	Game game(excelMode, numBots, numGenerations, boardWidth, boardHeight, messChance);

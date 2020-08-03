@@ -8,7 +8,7 @@ Bot::Bot(int id) :
 	//printChromosome();
 }
 
-Bot::Bot(const Bot & clone) :
+Bot::Bot(const Bot &clone) :
 	id_(clone.id_),
 	fitness_(clone.fitness_) 
 {

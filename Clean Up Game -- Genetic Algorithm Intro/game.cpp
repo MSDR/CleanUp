@@ -27,7 +27,7 @@ void Game::initializeGame(int numBots, int numGenerations, int boardWidth, int b
 		population_.push_back(std::make_pair(bot, fitness)); //use population_.clear() or .erase() to delete bots -- it clears memory too
 	}
 	std::sort(population_.begin(), population_.end(), populationSortByFitness);
-	//population_[0].first.printChromosome(); 
+	//population_[0].first->printChromosome(); 
 	//printPopulation();
 }
 
@@ -74,20 +74,22 @@ void Game::gameLoop() {
 		}
 
 		while (generation < genToRunTo) {
-			Bot mom(*population_[0].first);
-			Bot dad(*population_[1].first);
+			Bot* mom = new Bot(*population_[0].first);
+			Bot* dad = new Bot(*population_[1].first);
 		//	mom.printChromosome();
 		//	dad.printChromosome();
 
-			for (int i = 2; i < population_.size(); ++i) {
+			for (int i = 0; i < population_.size(); ++i) {
 				delete population_[i].first;
 			}
 			population_.clear();
+			population_.push_back(std::make_pair(mom, mom->fitness_));
+			population_.push_back(std::make_pair(dad, dad->fitness_));
 
 			int avgFitness = 0;
 			bool botCompletedGame = false;
 			for (int b = 2; b < numBots_; ++b) {
-				Bot* bot = new Bot(mom, dad, mutationChance_, b);
+				Bot* bot = new Bot(*mom, *dad, mutationChance_, b);
 				int fitness = bot->calculateFitness(board_).first;
 				botCompletedGame = bot->calculateFitness(board_).second;
 				avgFitness += fitness;
