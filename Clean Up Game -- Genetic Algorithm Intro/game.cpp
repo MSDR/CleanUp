@@ -6,12 +6,12 @@ struct {
 	}
 } populationSortByFitness;
 
-Game::Game(bool excelMode, int numBots, int numGenerations, int boardWidth, int boardHeight, double messChance, double mutationChance) :
+Game::Game(bool excelMode, int numBots, int boardWidth, int boardHeight, double messChance, double mutationChance) :
 	numBots_(numBots),
 	mutationChance_(mutationChance),
 	excelMode_(excelMode)
 {
-	initializeGame(numBots, numGenerations, boardWidth, boardHeight, messChance);
+	initializeGame(numBots, boardWidth, boardHeight, messChance , mutationChance);
 	gameLoop();
 }
 
@@ -53,7 +53,7 @@ void Game::gameLoop() {
 			} else {
 				genToRunTo += std::stoi(str);
 			}
-			std::cout << "\ngeneration  topFitness  topMoves  avgFitness\n";
+			std::cout << "\ngeneration  topFitness  topMoves  topCleaned  avgFitness\n";
 		} else {
 			if (str == "r" || str == "run" || str == "run generation") {
 				std::cout << "\nHow many?\n";
@@ -103,10 +103,10 @@ void Game::gameLoop() {
 
 				avgFitness /= numBots_;
 				std::cout << "Generation " << generation << " avg fitness: " << std::setw(4) << avgFitness << std::endl;
-				std::cout << "Bot 0 | Fitness: " << std::setw(4) << population_[0].second << " | Moves: " << std::setw(3) << population_[0].first->movesToComplete_ << std::endl;
-				std::cout << "Bot 1 | Fitness: " << std::setw(4) << population_[1].second << " | Moves: " << std::setw(3) << population_[1].first->movesToComplete_ << std::endl << std::endl;
+				std::cout << "Bot 0 | Fitness: " << std::setw(4) << population_[0].second << " | Moves: " << std::setw(3) << population_[0].first->movesToComplete_ << " | Cleaned: " << std::setw(3) << population_[0].first->messesCleaned_ << std::endl;
+				std::cout << "Bot 1 | Fitness: " << std::setw(4) << population_[1].second << " | Moves: " << std::setw(3) << population_[1].first->movesToComplete_ << " | Cleaned: " << std::setw(3) << population_[1].first->messesCleaned_ << std::endl;
 
-				std::cout << "A bot completed the game! Enter h to halt or any key to continue: ";
+				if(!excelMode_) std::cout << "A bot completed the game! Enter h to halt or any key to continue: ";
 				std::string s;
 				std::cin >> s;
 				if (s == "h") break;
@@ -119,7 +119,7 @@ void Game::gameLoop() {
 				std::cout << "Bot 0 | Fitness: " << std::setw(4) << population_[0].second << " | Moves: " << std::setw(3) << population_[0].first->movesToComplete_ << std::endl;
 				std::cout << "Bot 1 | Fitness: " << std::setw(4) << population_[1].second << " | Moves: " << std::setw(3) << population_[1].first->movesToComplete_ << std::endl << std::endl;
 			} else if (excelMode_) {
-				std::cout << std::setw(12) << generation << std::setw(11) << population_[0].second << std::setw(10) << population_[0].first->movesToComplete_ << avgFitness << std::endl;
+				std::cout << std::setw(12) << generation << std::setw(12) << population_[0].second << std::setw(10) << std::setw(10) << population_[0].first->movesToComplete_ << std::setw(12) << population_[0].first->messesCleaned_ << avgFitness << std::endl;
 			}
 			//if(generation%50 == 0) printPopulation();
 			generation++;

@@ -8,7 +8,6 @@ int main(int argc, char* argv[]) {
 	std::cout << std::left;
 
 	int numBots = 200;
-	int numGenerations = 50;
 	int boardWidth = 8;
 	int boardHeight = 8;
 	double messChance = 0.2;
@@ -19,9 +18,6 @@ int main(int argc, char* argv[]) {
 		if (argv[i] == std::string("--numBots") || argv[i] == std::string("--b")) {
 			i++;
 			numBots = std::stoi(argv[i]);
-		} else if (argv[i] == std::string("--numGenerations") || argv[i] == std::string("--g")) {
-			i++;
-			numGenerations = std::stoi(argv[i]);
 		} else if (argv[i] == std::string("--boardWidth") || argv[i] == std::string("--w")) {
 			i++;
 			boardWidth = std::stoi(argv[i]);
@@ -41,7 +37,7 @@ int main(int argc, char* argv[]) {
 			return 1;
 		}
 	}
-	Game game(excelMode, numBots, numGenerations, boardWidth, boardHeight, messChance);
+	Game game(excelMode, numBots, boardWidth, boardHeight, messChance, mutationChance);
 	std::cout << std::endl << std::endl;
 }
 

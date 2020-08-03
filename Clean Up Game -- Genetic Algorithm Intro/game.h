@@ -13,10 +13,10 @@
 
 class Game {
 public:
-	Game(bool excelMode = false, int numBots = 200, int numGenerations = 50, int boardWidth = 8, int boardHeight = 8, double messChance = 0.2f, double mutationChance = 0.1f);
+	Game(bool excelMode, int numBots, int boardWidth, int boardHeight, double messChance, double mutationChance);
 
 private:	
-	void initializeGame(int numBots, int numGenerations, int boardWidth = 8, int boardHeight = 8, double messChance = 0.2f);
+	void initializeGame(int numBots, int numGenerations, int boardWidth, int boardHeight, double messChance);
 	void gameLoop();
 
 	//0 if empty

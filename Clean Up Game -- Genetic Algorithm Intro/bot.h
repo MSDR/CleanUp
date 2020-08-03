@@ -42,6 +42,7 @@ public:
 	int id_;
 	int fitness_;
 	int movesToComplete_;
+	int messesCleaned_;
 private:
 	std::map<std::array<Tile, 5>, Action> chromosome_;
 };

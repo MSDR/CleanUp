@@ -10,7 +10,9 @@ Bot::Bot(int id) :
 
 Bot::Bot(const Bot &clone) :
 	id_(clone.id_),
-	fitness_(clone.fitness_) 
+	fitness_(clone.fitness_),
+	movesToComplete_(clone.movesToComplete_),
+	messesCleaned_(clone.messesCleaned_)
 {
 	for (std::map<std::array<Tile, 5>, Action>::const_iterator ribosome = clone.chromosome_.begin(); ribosome != clone.chromosome_.end(); ++ribosome) {
 		chromosome_.insert(std::make_pair(ribosome->first, ribosome->second));
@@ -112,13 +114,13 @@ std::pair<int, bool> Bot::calculateFitness(Board board, bool playVisually) {
 	int maxMoves = board.w_*board.h_*4;
 	int botX = 0, botY = 0;
 	int moveCount = 0;
-	int messesCleaned = 0;
+	messesCleaned_ = 0;
 
 	/*	+15 for successful clean up
 		-10 for slippery floors (cleaning an already clean floor)
 		-1 for each move (-3 for bumping into a wall) */
 	int fitness = 0;
-	while (moveCount < maxMoves && messesCleaned < board.messes_) {
+	while (moveCount < maxMoves && messesCleaned_ < board.messes_) {
 		if (playVisually) {
 			std::cout << "\nFitness: " << fitness << std::endl;
 			board.printBoard(botX, botY);
@@ -137,7 +139,7 @@ std::pair<int, bool> Bot::calculateFitness(Board board, bool playVisually) {
 				if (board.board_[botY][botX] == 1) { //Successful clean
 					fitness += 15;
 					board.board_[botY][botX] = 0; 
-					messesCleaned++;
+					messesCleaned_++;
 				} else { //Slippery floors
 					fitness -= 10;
 				}
@@ -180,8 +182,8 @@ std::pair<int, bool> Bot::calculateFitness(Board board, bool playVisually) {
 		board.printBoard(botX, botY);
 	}
 
-	movesToComplete_ = (messesCleaned >= board.messes_) ? moveCount : -1;
+	movesToComplete_ = moveCount;
 
 	fitness_ = fitness;
-	return std::make_pair(fitness, messesCleaned >= board.messes_);
+	return std::make_pair(fitness, messesCleaned_ >= board.messes_);
 }
